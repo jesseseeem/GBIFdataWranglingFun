@@ -16,6 +16,8 @@ plot(reallyBigMolluscs$lat ~ reallyBigMolluscs$long, xlim = c(-185, 185), ylim =
 ### using the ggplot2 library, we can create a hex heatmap to better visualize the density of sampling
 ### use log() because the occurrence density varies from 0 - ~1000, so better for visualizations
 
+library(ggplot2)
+
 hexMol <- ggplot(reallyBigMolluscs, aes(x = long, y = lat)) +
 	theme_minimal() +
 	geom_hex(aes(fill = stat(log(count))), binwidth = c(1, 1))+ 
