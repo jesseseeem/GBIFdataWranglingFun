@@ -1,9 +1,11 @@
 ### in Julia, navigate to the directory with the "occurrences.txt" tab-delimited data file downloaded from GBIF
 ### in this example, files are named as if we're using the mollusc dataset
+### e.g., https://www.gbif.org/occurrence/download/0253699-200613084148143 
+### the initial text file is pretty big (10GB), 
+### here we just reduce the number of columns, so we still have >7million occurrences, but with fewer columns so the text file is < 1GB
+### and also generate smaller subsets so we can work with a random subsample of 10k occurrences (closer to a 1Mb file)
 
 using DataFrames, CSV, Impute, Random
-
-
 
 GBIF_mollusc = CSV.read("occurrence.txt", DataFrame; header = true);
 
