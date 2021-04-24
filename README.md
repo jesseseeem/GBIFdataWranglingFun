@@ -8,3 +8,5 @@ https://www.gbif.org/occurrence/download/0253699-200613084148143
 Because the initial dataset is large, I do some of the initial data processing in Julia https://julialang.org/ using packages like DataFrames and CSV
 
 Then I switch over to R for visualization and some ecological statistics (e.g., from the vegan and iNEXT libraries). 
+
+Some of these analyses are related to exercises I have over here: https://gitlab.com/jessecm/species-diversity-playground/-/tree/master 
