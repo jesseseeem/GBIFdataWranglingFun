@@ -42,3 +42,4 @@ plot(pool, main = "20d Lat x 20d Long Geographical subsamples of 10k GBIF Mollus
 estimateR(molluscGBIFspatialSamplesSppMatrix[1:9,])
 
 ### gotta add some iNEXT stuff at some point.. that would be cool
+### in Julia, I should do the random sorters and random uniform variables, so there would be an alternative way of generating the community matrix... 
