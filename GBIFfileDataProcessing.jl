@@ -26,8 +26,8 @@ subset_molluscGBIF_generaIDs_goodLatLong = DataFrame(lat = molluscGBIF_generaIDs
                genusKey = molluscGBIF_generaIDs_goodLatLong.genusKey, 
                gbifID = molluscGBIF_generaIDs_goodLatLong.gbifID, 
                iucnCat = molluscGBIF_generaIDs_goodLatLong.iucnRedListCategory, 
-               randomsorter = randn(rownumber),
-               randomsorter2 = randn(rownumber)); 
+               randomsorter = (randn(rownumber) .+ rand(-90:90,rownumber)),
+               randomsorter2 = (randn(rownumber) .+ rand(-180:180,rownumber))); 
 
 
 sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter); 
