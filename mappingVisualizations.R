@@ -29,7 +29,7 @@ plot(hexMol)
 ### to use a similar approach to represent genus- (or other taxonomic grouping) richness, need to use the numeric genus key ("genusKey") GBIF provides: 
 
 dev.new()
-ggplot(bigMolluscsCodes, aes(x = long, y = lat, z = genusKey))+
+ggplot(reallyBigMolluscs, aes(x = long, y = lat, z = genusKey))+
 	stat_summary_hex(
 		fun = function(z){log10(length(unique(z)))}, 
 		binwidth = c(0.25, 0.25))+
