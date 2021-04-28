@@ -37,10 +37,12 @@ molluscCommunitySubsample = read.table(file = "molluscGBIFspatialSamples.csv", h
 
 library(vegan)
 
-### report species richness of each grid sample (row in molluscGBIFspatialSamplesSppMatrix)
-specnumber(molluscGBIFspatialSamplesSppMatrix, MARGIN = 1)
+### need to omit lat/long for species count analyses [ , 3: dim(molluscGBIFspatialSamplesSppMatrix)[2]]
 
-specpool(molluscGBIFspatialSamplesSppMatrix)
+### report species richness of each grid sample (row in molluscGBIFspatialSamplesSppMatrix)
+specnumber(molluscGBIFspatialSamplesSppMatrix[ , 3: dim(molluscGBIFspatialSamplesSppMatrix)[2]], MARGIN = 1)
+
+specpool(molluscGBIFspatialSamplesSppMatrix[ , 3: dim(molluscGBIFspatialSamplesSppMatrix)[2]])
 pool <- poolaccum(molluscGBIFspatialSamplesSppMatrix)
 summary(pool, display = "chao")
 dev.new()
