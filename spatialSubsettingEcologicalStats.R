@@ -1,6 +1,7 @@
 ### starting off with some of the subset datasets generated from the Julia script, do further subsetting and reshaping of the diversity data
 
 ### starting this with the 10k mollusc occurrence subsample
+### lower down, you'll need the libraries "vegan" and "stringr"
 
 molluscs10k = read.table(file = "~/Desktop/2021_extinctionsCourse_IUCNdata/GBIF_occurenceData/GBIF_molluscsData.csv", header = T, sep = ",")
 
