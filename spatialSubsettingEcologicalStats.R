@@ -25,9 +25,12 @@ for (h in -9:8){
 
 molluscGBIFspatialSamples = na.omit(molluscGBIFspatialSamples)
 
-### below generate a data.frame that the vegan library migth like
-molluscGBIFspatialSamplesSppMatrix = data.frame(t(molluscGBIFspatialSamples[, 3:1997]), row.names = unique(molluscs10k$genus))
-molluscGBIFspatialSamplesSppMatrix = t(molluscGBIFspatialSamplesSppMatrix)
+library(stringr)
+latLongNames = str_glue_data(molluscGBIFspatialSubsampleDF, "lat{molluscGBIFspatialSubsampleDF[, 2]}_long{molluscGBIFspatialSubsampleDF[, 1]}")
+
+write.table(molluscGBIFspatialSamples, file = "molluscGBIFspatialSamples.csv", sep = ",", col.names = c("long", "lat", unique(reallyBigMolluscs$genus)), , row.names = latLongNames , quote = FALSE)
+
+molluscCommunitySubsample = read.table(file = "molluscGBIFspatialSamples.csv", header = T, sep = ",")
 
 library(vegan)
 
