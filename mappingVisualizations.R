@@ -17,6 +17,7 @@ plot(reallyBigMolluscs$lat ~ reallyBigMolluscs$long, xlim = c(-185, 185), ylim =
 ### use log() because the occurrence density varies from 0 - ~1000, so better for visualizations
 
 library(ggplot2)
+library(viridis)
 
 hexMol <- ggplot(reallyBigMolluscs, aes(x = long, y = lat)) +
 	theme_minimal() +
