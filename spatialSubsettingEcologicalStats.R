@@ -169,7 +169,6 @@ for (h in -9:8){
 		molluscGBIFrandomSamplesGenus = rbind(molluscGBIFrandomSamplesGenus, latLongSubX)
 	}
 }
-acceptedTaxonKey
 
 molluscGBIFrandomSamplesGenus = na.omit(molluscGBIFrandomSamplesGenus)
 
