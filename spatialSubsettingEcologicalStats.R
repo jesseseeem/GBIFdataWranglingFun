@@ -117,8 +117,8 @@ write.table(molluscGBIFrandomSubsampleSpeciesDF, file = "molluscGBIFrandomSubsam
 
 
 
-molluscRandomCommunitySubsample = read.table(file = "molluscGBIFrandomSubsampleSpeciesDF.csv", header = T, sep = ",")
-
+molluscRandomSpeciesSubsample = read.table(file = "molluscGBIFrandomSubsampleSpeciesDF.csv", header = T, sep = ",")
+specpool(molluscRandomSpeciesSubsample[ , 3: dim(molluscRandomSpeciesSubsample)[2]])
 
 ### now for genera: 
 ### spatial subset at the genus level
@@ -151,7 +151,7 @@ write.table(molluscGBIFspatialSamplesGeneraDF, file = "molluscGBIFspatialSamples
 
 
 molluscGenusSpatialSubsample = read.table(file = "molluscGBIFspatialSamplesGenera.csv", header = T, sep = ",")
-
+specpool(molluscGenusSpatialSubsample[ , 3: dim(molluscGenusSpatialSubsample)[2]])
 
 ### genus-level non-spatial subsamples, in 20 x 20 randomsorter blocks
 ### using randomsorter (range ~ -90:90) and randomsorter2 (range ~ -180:180)
@@ -183,5 +183,5 @@ write.table(molluscGBIFrandomSubsampleGenusDF, file = "molluscGBIFrandomSubsampl
 
 
 molluscRandomCommunitySubsampleGenus = read.table(file = "molluscGBIFrandomSubsampleGenusDF.csv", header = T, sep = ",")
-
+specpool(molluscRandomCommunitySubsampleGenus[ , 3: dim(molluscRandomCommunitySubsampleGenus)[2]])
 
