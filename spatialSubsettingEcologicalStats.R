@@ -31,7 +31,7 @@ molluscGBIFspatialSubsampleDF = data.frame(molluscGBIFspatialSamples)
 library(stringr)
 latLongNames = str_glue_data(molluscGBIFspatialSubsampleDF, "lat{molluscGBIFspatialSubsampleDF[, 2]}_long{molluscGBIFspatialSubsampleDF[, 1]}")
 
-write.table(molluscGBIFspatialSamples, file = "molluscGBIFspatialSamples.csv", sep = ",", col.names = c("long", "lat", unique(molluscs10k$genus)), , row.names = latLongNames , quote = FALSE)
+write.table(molluscGBIFspatialSamples, file = "molluscGBIFspatialSamples.csv", sep = ",", col.names = c("long", "lat", unique(molluscs10k$genus)), row.names = latLongNames , quote = FALSE)
 
 molluscCommunitySubsample = read.table(file = "molluscGBIFspatialSamples.csv", header = T, sep = ",")
 
