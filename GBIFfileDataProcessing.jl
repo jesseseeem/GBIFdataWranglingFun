@@ -30,6 +30,9 @@ subset_molluscGBIF_generaIDs_goodLatLong = DataFrame(lat = molluscGBIF_generaIDs
                randomsorter2 = (randn(rownumber) .+ rand(-180:180,rownumber))); 
 
 
+### the random sorters have similar ranges to lat/long data
+### this seemed nice for making a separate, spatially shuffled subset later on
+
 sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter); 
 
 ### write out entire subsetted dataset 
