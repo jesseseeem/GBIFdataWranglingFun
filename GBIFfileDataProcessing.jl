@@ -52,4 +52,17 @@ sort!(subset_molluscGBIF_generaIDs_goodLatLong_IUCN, :randomsorter2);
 ### write out just the IUCN data
 CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscGBIF_generaIDs_goodLatLong_IUCN[1:10000, :])), bufsize = 4194304000);
 
+### potentially try to write a loop for spatial subsetting in Julia instead of R: 
+
+for h = -9:8
+	for i = -4:4
+		latLongSubX = (20*h, 20*i)
+		subX = subset(molluscs10k :long >= (h *20)  && :long <= (h * 20 + 19) && :lat >= (i * 20) && :lat <= (i * 20 + 19)) ### use select from metadataframes
+		for (i in 1:length(unique(molluscs10k$genus))){
+			latLongSubX = c(latLongSubX, sum(unique(molluscs10k$genus)[i] == subX$genus))
+			}
+		latLongSubX = na.omit(latLongSubX)
+		molluscGBIFspatialSamples = rbind(molluscGBIFspatialSamples, latLongSubX)
+	}
+}
 
