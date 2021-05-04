@@ -60,7 +60,7 @@ CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscG
 for h = -9:8
 	for i = -4:4
 		latLongSubX = (20*h, 20*i)
-		subX = subset(molluscs10k :long >= (h *20)  && :long <= (h * 20 + 19) && :lat >= (i * 20) && :lat <= (i * 20 + 19)) ### use select from metadataframes
+		subX = subset(molluscs10k :long >= (h *20)  && :long <= (h * 20 + 19) && :lat >= (i * 20) && :lat <= (i * 20 + 19)) ### use filter from dataframes or select from metadataframes?
 		for (i in 1:length(unique(molluscs10k$genus))){
 			latLongSubX = c(latLongSubX, sum(unique(molluscs10k$genus)[i] == subX$genus))
 			}
