@@ -9,23 +9,19 @@ using DataFrames, CSV, Impute, Random
 
 GBIF_mollusc = CSV.read("occurrence.txt", DataFrame; header = true);
 
-GBIF_molluscOccurences_cleaned = Impute.declaremissings(GBIF_mollusc; values = "NULL");
-molluscGBIF_generaIDs = dropmissing(GBIF_molluscOccurences_cleaned, :genus); 
-molluscGBIF_generaIDs_goodLatLong = dropmissing(molluscGBIF_generaIDs, :decimalLatitude);
-
-rownumber = size(molluscGBIF_generaIDs_goodLatLong)[1]
+rownumber = size(GBIF_mollusc)[1]
 
 ### reduce number of columns to just the data we're interested in, 
 ### and add two columns of random numbers we can use to sort the data into different subsets
 
-subset_molluscGBIF_generaIDs_goodLatLong = DataFrame(lat = molluscGBIF_generaIDs_goodLatLong.decimalLatitude, 
-               long = molluscGBIF_generaIDs_goodLatLong.decimalLongitude,
-               order = molluscGBIF_generaIDs_goodLatLong.order, 
-               family = molluscGBIF_generaIDs_goodLatLong.family, 
-               genus = molluscGBIF_generaIDs_goodLatLong.genus, 
-               genusKey = molluscGBIF_generaIDs_goodLatLong.genusKey, 
-               gbifID = molluscGBIF_generaIDs_goodLatLong.gbifID, 
-               iucnCat = molluscGBIF_generaIDs_goodLatLong.iucnRedListCategory, 
+subset_molluscGBIF = DataFrame(lat = GBIF_mollusc.decimalLatitude, 
+               long = GBIF_mollusc.decimalLongitude,
+               order = GBIF_mollusc.order, 
+               family = GBIF_mollusc.family, 
+               genus = GBIF_mollusc.genus, 
+               genusKey = GBIF_mollusc.genusKey, 
+               gbifID = GBIF_mollusc.gbifID, 
+               iucnCat = GBIF_mollusc.iucnRedListCategory, 
                randomsorter = (randn(rownumber) .+ rand(-90:90,rownumber)),
                randomsorter2 = (randn(rownumber) .+ rand(-180:180,rownumber)),
 		randomsorter3 = (randn(rownumber) .+ rand(1000:9999,rownumber))); 
