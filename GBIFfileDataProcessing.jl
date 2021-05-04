@@ -52,19 +52,19 @@ CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscG
 
 ### potentially try to write a loop for spatial subsetting in Julia instead of R: 
 
-### use empty to create a dataframe with same column names but zero rows
+### spatial subsetting in Julia
+
+spatialSample = ["latSample"; "longSample"; unique(subset_protistGBIF_goodData.genusKey)];
 
 
 for h = -9:8
 	for i = -4:4
-		latLongSubX = (20*h, 20*i)
-		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), subset_molluscGBIF_goodData);  ### use filter from dataframes or select from metadataframes?
-		for (j in 1:length(unique(molluscs10k$genus))){ 
-			### oh shit I hope this i (instead of j) didn't f up my previous loop
-			latLongSubX = c(latLongSubX, sum(unique(molluscs10k$genus)[i] == subX$genus))
-			}
-		latLongSubX = na.omit(latLongSubX)
-		molluscGBIFspatialSamples = rbind(molluscGBIFspatialSamples, latLongSubX)
-	}
-}
+		latLongSubX = [20*h 20*i]
+		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), subset_protistGBIF_goodData)
+			for j = 1:length(unique(subset_protistGBIF_goodData.genusKey))
+				latLongSubX = [latLongSubX sum(subX.genusKey .== unique(subset_protistGBIF_goodData.genusKey)[j])]
+			end
+		spatialSample = hcat(spatialSample, latLongSubX')
+	end
+end
 
