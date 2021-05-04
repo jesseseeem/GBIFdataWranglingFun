@@ -54,6 +54,9 @@ CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscG
 
 ### potentially try to write a loop for spatial subsetting in Julia instead of R: 
 
+### use empty to create a dataframe with same column names but zero rows
+
+
 for h = -9:8
 	for i = -4:4
 		latLongSubX = (20*h, 20*i)
