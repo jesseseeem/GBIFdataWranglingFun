@@ -36,7 +36,7 @@ subset_molluscGBIF_goodData = dropmissing(subset_molluscGBIF, [:lat, :long, :gen
 
 ### remove missing values from rows we care about
 
-sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter); 
+
 
 ### write out entire subsetted dataset 
 CSV.write("subsetGBIF_molluscDataSorted.csv", DataFrame(sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter)), bufsize = 4194304000);
