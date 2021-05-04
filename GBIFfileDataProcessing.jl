@@ -32,11 +32,8 @@ subset_molluscGBIF = DataFrame(lat = GBIF_mollusc.decimalLatitude,
 ### this seemed nice for making a separate, spatially shuffled subset later on
 ### 3rd random sorter is just for subsetting the data 
 
-subset_molluscGBIF_goodData = dropmissing(subset_molluscGBIF, [:lat, :long, :genusKey, :genus, :acceptedTaxonKey]);
-
 ### remove missing values from rows we care about
-
-
+subset_molluscGBIF_goodData = dropmissing(subset_molluscGBIF, [:lat, :long, :genusKey, :genus, :acceptedTaxonKey]);
 
 ### write out entire subsetted dataset 
 CSV.write("subsetGBIF_molluscDataSorted.csv", DataFrame(sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter)), bufsize = 4194304000);
