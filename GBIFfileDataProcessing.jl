@@ -27,13 +27,12 @@ subset_molluscGBIF_generaIDs_goodLatLong = DataFrame(lat = molluscGBIF_generaIDs
                gbifID = molluscGBIF_generaIDs_goodLatLong.gbifID, 
                iucnCat = molluscGBIF_generaIDs_goodLatLong.iucnRedListCategory, 
                randomsorter = (randn(rownumber) .+ rand(-90:90,rownumber)),
-               randomsorter2 = (randn(rownumber) .+ rand(-180:180,rownumber))); 
+               randomsorter2 = (randn(rownumber) .+ rand(-180:180,rownumber)),
+		randomsorter3 = (randn(rownumber) .+ rand(1000:9999,rownumber))); 
 
-
-### the random sorters have similar ranges to lat/long data
+### the first two random sorters have similar ranges to lat/long data
 ### this seemed nice for making a separate, spatially shuffled subset later on
-### however, because of the sort functions, below, it might actually be better to have a THIRD randomsorter
-### this results in only super-low values for randomsorter, which messes with the subsetting 
+### 3rd random sorter is just for subsetting the data 
 
 sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter); 
 
