@@ -59,7 +59,8 @@ for h = -9:8
 	for i = -4:4
 		latLongSubX = (20*h, 20*i)
 		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), subset_molluscGBIF_goodData);  ### use filter from dataframes or select from metadataframes?
-		for (i in 1:length(unique(molluscs10k$genus))){
+		for (j in 1:length(unique(molluscs10k$genus))){ 
+			### oh shit I hope this i (instead of j) didn't f up my previous loop
 			latLongSubX = c(latLongSubX, sum(unique(molluscs10k$genus)[i] == subX$genus))
 			}
 		latLongSubX = na.omit(latLongSubX)
