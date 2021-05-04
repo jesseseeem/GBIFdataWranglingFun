@@ -32,7 +32,7 @@ subset_molluscGBIF = DataFrame(lat = GBIF_mollusc.decimalLatitude,
 ### this seemed nice for making a separate, spatially shuffled subset later on
 ### 3rd random sorter is just for subsetting the data 
 
-subset_molluscGBIF_goodData = dropmissing(subset_molluscGBIF, [:lat, :long, :genusKey, :genus]);
+subset_molluscGBIF_goodData = dropmissing(subset_molluscGBIF, [:lat, :long, :genusKey, :genus, :acceptedTaxonKey]);
 
 ### remove missing values from rows we care about
 
