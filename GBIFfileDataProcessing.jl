@@ -54,7 +54,9 @@ CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscG
 
 ### spatial subsetting in Julia
 
-spatialSample = ["latSample"; "longSample"; unique(subset_protistGBIF_goodData.genusKey)];
+genusKeyList = unique(subset_protistGBIF_goodData.genusKey); 
+### this is super-important; speeds thinks up literally ~500x on the protist dataset
+spatialSample = ["latSample"; "longSample"; genusKeyList];
 
 
 for h = -9:8
