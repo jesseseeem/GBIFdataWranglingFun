@@ -9,7 +9,7 @@ using DataFrames, CSV, Impute, Random
 
 GBIF_mollusc = CSV.read("occurrence.txt", DataFrame; header = true);
 
-rownumber = size(GBIF_mollusc)[1]
+rnum = size(GBIF_mollusc)[1]
 
 ### reduce number of columns to just the data we're interested in, 
 ### and add two columns of random numbers we can use to sort the data into different subsets
@@ -24,9 +24,9 @@ subset_molluscGBIF = DataFrame(lat = GBIF_mollusc.decimalLatitude,
 		acceptedTaxonKey = GBIF_mollusc.acceptedTaxonKey,
                gbifID = GBIF_mollusc.gbifID, 
                iucnCat = GBIF_mollusc.iucnRedListCategory, 
-               randomsorter = (randn(rownumber) .+ rand(-90:90,rownumber)),
-               randomsorter2 = (randn(rownumber) .+ rand(-180:180,rownumber)),
-		randomsorter3 = (randn(rownumber) .+ rand(1000:9999,rownumber))); 
+               randomsorter = (randn(rnum) .+ rand(-90:90,rnum)),
+               randomsorter2 = (randn(rnum) .+ rand(-180:180,rnum)),
+		randomsorter3 = (randn(rnum) .+ rand(1000:9999,rnum))); 
 
 ### the first two random sorters have similar ranges to lat/long data
 ### this seemed nice for making a separate, spatially shuffled subset later on
