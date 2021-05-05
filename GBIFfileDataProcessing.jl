@@ -63,8 +63,8 @@ for h = -9:8
 	for i = -4:4
 		latLongSubX = [20*h 20*i]
 		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), subset_protistGBIF_goodData)
-			for j = 1:length(unique(subset_protistGBIF_goodData.genusKey))
-				latLongSubX = [latLongSubX sum(subX.genusKey .== unique(subset_protistGBIF_goodData.genusKey)[j])]
+			for j = 1:length(genusKeyList)
+				latLongSubX = [latLongSubX sum(subX.genusKey .== genusKeyList[j])]
 			end
 		spatialSample = hcat(spatialSample, latLongSubX')
 	end
