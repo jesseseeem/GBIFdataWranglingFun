@@ -71,3 +71,25 @@ for h = -9:8
 end
 
 CSV.write("spatialSample.CSV", Tables.table(spatialSample), header = false);
+
+### write-out random(non-spatial) sample: 
+
+genusKeyList = unique(molluscsGBIF.genusKey); 
+
+randomGenusSample = ["rand1Sample"; "rand2Sample"; genusKeyList];
+
+
+for h = -9:8
+	for i = -4:4
+		randomSubX = [20*h 20*i]
+		subX = filter(row -> row.randomsorter2 >= (h *20)  && row.randomsorter2 <= (h * 20 + 19) && row.randomsorter >= (i * 20) && row.randomsorter <= (i * 20 + 19), molluscsGBIF)
+			for j = 1:length(genusKeyList)
+				randomSubX = [randomSubX sum(subX.genusKey .== genusKeyList[j])]
+			end
+		randomGenusSample = hcat(randomGenusSample, randomSubX')
+	end
+end
+
+CSV.write("randomGenusSample.CSV", Tables.table(randomGenusSample), header = false);
+
+
