@@ -92,4 +92,44 @@ end
 
 CSV.write("randomGenusSample.CSV", Tables.table(randomGenusSample), header = false);
 
+### species-level samples below based on "acceptedTaxonKey"
+
+speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey); 
+
+spatialSpeciesSample = ["latSample"; "longSample"; speciesKeyList];
+
+
+for h = -9:8
+	for i = -4:4
+		latLongSubX = [20*h 20*i]
+		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), molluscsGBIF)
+			for j = 1:length(speciesKeyList)
+				latLongSubX = [latLongSubX sum(subX.acceptedTaxonKey .== speciesKeyList[j])]
+			end
+		spatialSpeciesSample = hcat(spatialSpeciesSample, latLongSubX')
+	end
+end
+
+
+CSV.write("spatialSpeciesSample.CSV", Tables.table(spatialSpeciesSample), header = false);
+
+
+
+speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey); 
+
+randomSpeciesSample = ["rand1Sample"; "rand2Sample"; speciesKeyList];
+
+
+for h = -9:8
+	for i = -4:4
+		randomSubX = [20*h 20*i]
+		subX = filter(row -> row.randomsorter2 >= (h *20)  && row.randomsorter2 <= (h * 20 + 19) && row.randomsorter >= (i * 20) && row.randomsorter <= (i * 20 + 19), molluscsGBIF)
+			for j = 1:length(speciesKeyList)
+				randomSubX = [randomSubX sum(subX.acceptedTaxonKey .== speciesKeyList[j])]
+			end
+		randomSpeciesSample = hcat(randomSpeciesSample, randomSubX')
+	end
+end
+
+CSV.write("randomSpeciesSample.CSV", Tables.table(randomSpeciesSample), header = false);
 
