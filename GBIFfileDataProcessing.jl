@@ -70,3 +70,4 @@ for h = -9:8
 	end
 end
 
+CSV.write("spatialSample.CSV", Tables.table(spatialSample), header = false);
