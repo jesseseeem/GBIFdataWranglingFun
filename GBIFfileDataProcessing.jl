@@ -56,7 +56,7 @@ CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscG
 
 genusKeyList = unique(subset_protistGBIF_goodData.genusKey); 
 ### this is super-important; speeds thinks up literally ~500x on the protist dataset
-spatialSample = ["latSample"; "longSample"; genusKeyList];
+spatialGenusSample = ["latSample"; "longSample"; genusKeyList];
 
 
 for h = -9:8
@@ -66,11 +66,11 @@ for h = -9:8
 			for j = 1:length(genusKeyList)
 				latLongSubX = [latLongSubX sum(subX.genusKey .== genusKeyList[j])]
 			end
-		spatialSample = hcat(spatialSample, latLongSubX')
+		spatialGenusSample = hcat(spatialGenusSample, latLongSubX')
 	end
 end
 
-CSV.write("spatialSample.CSV", Tables.table(spatialSample), header = false);
+CSV.write("spatialGenusSample.CSV", Tables.table(spatialGenusSample), header = false);
 
 ### write-out random(non-spatial) sample: 
 
