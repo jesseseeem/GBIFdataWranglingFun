@@ -5,7 +5,7 @@
 ### here we just reduce the number of columns, so we still have >7million occurrences, but with fewer columns so the text file is < 1GB
 ### and also generate smaller subsets so we can work with a random subsample of 10k occurrences (closer to a 1Mb file)
 
-using DataFrames, CSV, Impute, Random
+using DataFrames, CSV, Tables, Random
 
 GBIF_mollusc = CSV.read("occurrence.txt", DataFrame; header = true);
 
