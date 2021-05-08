@@ -54,23 +54,28 @@ CSV.write("subSubsetGBIF_molluscDataSorted_IUCN.csv", DataFrame((subset_molluscG
 
 ### spatial subsetting in Julia
 
-genusKeyList = unique(molluscsGBIF.genusKey); 
-### this is super-important; speeds thinks up literally ~500x on the protist dataset
-spatialGenusSample = ["latSample"; "longSample"; genusKeyList];
+genusKeyList = unique(molluscsGBIF.genusKey);
+spatialGenusSample = Vector{Int64}(genusKeyList);
+latLongListDF = DataFrame(latSample = Int64[], longSample = Int64[])
 
 
 for h = -9:8
 	for i = -4:4
-		latLongSubX = [20*h 20*i]
+		latLongX = [20*i, 20*h]
 		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), molluscsGBIF)
+		latLongSubX = Vector{Int64}()
 			for j = 1:length(genusKeyList)
-				latLongSubX = [latLongSubX sum(subX.genusKey .== genusKeyList[j])]
+				latLongSubX = append!(latLongSubX, sum(subX.genusKey .== genusKeyList[j]))
 			end
-		spatialGenusSample = hcat(spatialGenusSample, latLongSubX')
+		spatialGenusSample = hcat(spatialGenusSample, latLongSubX)
+		latLongListDF = push!(latLongListDF, latLongX)
 	end
 end
 
-CSV.write("spatialGenusSample.CSV", Tables.table(spatialGenusSample), header = false);
+spatialGenusSampleT = spatialGenusSample';
+
+CSV.write("spatialGenusSampleOutput.csv", DataFrame(spatialGenusSampleT, :auto), header = false)
+CSV.write("latLongBoxes.csv", DataFrame(latLongListDF), header = true)
 
 ### write-out random(non-spatial) sample: 
 
