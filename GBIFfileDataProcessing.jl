@@ -77,25 +77,29 @@ spatialGenusSampleT = spatialGenusSample';
 CSV.write("spatialGenusSampleOutput.csv", DataFrame(spatialGenusSampleT, :auto), header = false)
 CSV.write("latLongBoxes.csv", DataFrame(latLongListDF), header = true)
 
-### write-out random(non-spatial) sample: 
-
-genusKeyList = unique(molluscsGBIF.genusKey); 
-
-randomGenusSample = ["rand1Sample"; "rand2Sample"; genusKeyList];
-
+### write-out random(non-spatial) genus-level sample: 
+genusKeyList = unique(molluscsGBIF.genusKey);
+randomGenusSample = Vector{Int64}(genusKeyList);
+randomListDF = DataFrame(rand1Sample = Int64[], rand2Sample = Int64[])
 
 for h = -9:8
 	for i = -4:4
-		randomSubX = [20*h 20*i]
+		randomX = [20*i, 20*h]
 		subX = filter(row -> row.randomsorter2 >= (h *20)  && row.randomsorter2 <= (h * 20 + 19) && row.randomsorter >= (i * 20) && row.randomsorter <= (i * 20 + 19), molluscsGBIF)
+		randomSubX = Vector{Int64}()
 			for j = 1:length(genusKeyList)
-				randomSubX = [randomSubX sum(subX.genusKey .== genusKeyList[j])]
+				randomSubX = append!(randomSubX, sum(subX.genusKey .== genusKeyList[j]))
 			end
-		randomGenusSample = hcat(randomGenusSample, randomSubX')
+		randomGenusSample = hcat(randomGenusSample, randomSubX)
+		randomListDF = push!(randomListDF, randomX)
 	end
 end
 
-CSV.write("randomGenusSample.CSV", Tables.table(randomGenusSample), header = false);
+randomGenusSampleT = randomGenusSample';
+
+CSV.write("randomGenusSampleOutput.csv", DataFrame(randomGenusSampleT, :auto), header = false)
+CSV.write("randomBoxes.csv", DataFrame(randomListDF), header = true)
+
 
 ### species-level samples below based on "acceptedTaxonKey"
 
