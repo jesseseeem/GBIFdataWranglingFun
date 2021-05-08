@@ -123,22 +123,24 @@ end
 CSV.write("spatialSpeciesSample.CSV", Tables.table(spatialSpeciesSample), header = false);
 
 ### output random (non-spatial) species subsamples 
-
-speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey); 
-
-randomSpeciesSample = ["rand1Sample"; "rand2Sample"; speciesKeyList];
-
+speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey);
+randomSpeciesSample = Vector{Int64}(speciesKeyList);
+randomListDF = DataFrame(rand1Sample = Int64[], rand2Sample = Int64[])
 
 for h = -9:8
 	for i = -4:4
-		randomSubX = [20*h 20*i]
+		randomX = [20*i, 20*h]
 		subX = filter(row -> row.randomsorter2 >= (h *20)  && row.randomsorter2 <= (h * 20 + 19) && row.randomsorter >= (i * 20) && row.randomsorter <= (i * 20 + 19), molluscsGBIF)
+		randomSubX = Vector{Int64}()
 			for j = 1:length(speciesKeyList)
-				randomSubX = [randomSubX sum(subX.acceptedTaxonKey .== speciesKeyList[j])]
+				randomSubX = append!(randomSubX, sum(subX.acceptedTaxonKey .== speciesKeyList[j]))
 			end
-		randomSpeciesSample = hcat(randomSpeciesSample, randomSubX')
+		randomSpeciesSample = hcat(randomSpeciesSample, randomSubX)
+		randomListDF = push!(randomListDF, randomX)
 	end
 end
 
-CSV.write("randomSpeciesSample.CSV", Tables.table(randomSpeciesSample), header = false);
+randomSpeciesSampleT = randomSpeciesSample';
 
+CSV.write("randomSpeciesSampleOutput.csv", DataFrame(randomSpeciesSampleT, :auto), header = false)
+CSV.write("randomSpeciesBoxes.csv", DataFrame(randomListDF), header = true)
