@@ -102,26 +102,27 @@ CSV.write("randomGenusBoxes.csv", DataFrame(randomListDF), header = true)
 
 
 ### species-level samples below based on "acceptedTaxonKey"
-
-speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey); 
-
-spatialSpeciesSample = ["latSample"; "longSample"; speciesKeyList];
-
+speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey);
+spatialSpeciesSample = Vector{Int64}(speciesKeyList);
+latLongListDF = DataFrame(latSample = Int64[], longSample = Int64[])
 
 for h = -9:8
 	for i = -4:4
-		latLongSubX = [20*h 20*i]
+		latLongX = [20*i, 20*h]
 		subX = filter(row -> row.long >= (h *20)  && row.long <= (h * 20 + 19) && row.lat >= (i * 20) && row.lat <= (i * 20 + 19), molluscsGBIF)
+		latLongSubX = Vector{Int64}()
 			for j = 1:length(speciesKeyList)
-				latLongSubX = [latLongSubX sum(subX.acceptedTaxonKey .== speciesKeyList[j])]
+				latLongSubX = append!(latLongSubX, sum(subX.acceptedTaxonKey .== speciesKeyList[j]))
 			end
-		spatialSpeciesSample = hcat(spatialSpeciesSample, latLongSubX')
+		spatialSpeciesSample = hcat(spatialSpeciesSample, latLongSubX)
+		latLongListDF = push!(latLongListDF, latLongX)
 	end
 end
 
+spatialSpeciesSampleT = spatialSpeciesSample';
 
-CSV.write("spatialSpeciesSample.CSV", Tables.table(spatialSpeciesSample), header = false);
-
+CSV.write("spatialSpeciesSampleOutput.csv", DataFrame(spatialSpeciesSampleT, :auto), header = false)
+CSV.write("latLongSpeciesBoxes.csv", DataFrame(latLongListDF), header = true)
 ### output random (non-spatial) species subsamples 
 speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey);
 randomSpeciesSample = Vector{Int64}(speciesKeyList);
