@@ -122,7 +122,7 @@ end
 
 CSV.write("spatialSpeciesSample.CSV", Tables.table(spatialSpeciesSample), header = false);
 
-
+### output random (non-spatial) species subsamples 
 
 speciesKeyList = unique(molluscsGBIF.acceptedTaxonKey); 
 
