@@ -75,7 +75,7 @@ end
 spatialGenusSampleT = spatialGenusSample';
 
 CSV.write("spatialGenusSampleOutput.csv", DataFrame(spatialGenusSampleT, :auto), header = false)
-CSV.write("latLongBoxes.csv", DataFrame(latLongListDF), header = true)
+CSV.write("latLongGenusBoxes.csv", DataFrame(latLongListDF), header = true)
 
 ### write-out random(non-spatial) genus-level sample: 
 genusKeyList = unique(molluscsGBIF.genusKey);
@@ -98,7 +98,7 @@ end
 randomGenusSampleT = randomGenusSample';
 
 CSV.write("randomGenusSampleOutput.csv", DataFrame(randomGenusSampleT, :auto), header = false)
-CSV.write("randomBoxes.csv", DataFrame(randomListDF), header = true)
+CSV.write("randomGenusBoxes.csv", DataFrame(randomListDF), header = true)
 
 
 ### species-level samples below based on "acceptedTaxonKey"
