@@ -23,7 +23,7 @@ fakeGenera = sample(100000:200000, 50000, replace = FALSE)
 
 ### use meteR library to generate a species-abundance distribution informed by Maximum Entropy Theory of Ecology
 ### see https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12625
-fakeSAD = meteESF(N0 = 5000000, S0 = 50000, E0 = NULL, minE = 1)
+fakemeteSAD = meteESF(N0 = 5000000, S0 = 50000, E0 = NULL, minE = 1)
 fakeSAD = sad(fakemeteSAD)
 fakeSADrepValues = fakeSAD$q(seq(0, 1, length = 50001))
 
