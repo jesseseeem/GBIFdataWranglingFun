@@ -36,8 +36,8 @@ fakeGeneraOccurrences = rep(fakeGenera, c(fakeSADrepValues[1:taxonRichness]))
 ### generate random degrees and distances from original taxon other members should be (numbers to add to lat and long)
 dispDeg = runif(length(fakeGeneraOccurrences), min = 0, max = 360)
 dispDist = abs(rcauchy(length(fakeGeneraOccurrences), location = 0, scale = 1))
-dispX = cos(dispDeg)* PossibleDispDist
-dispY = sin(dispDeg)* PossibleDispDist
+dispX = cos(dispDeg)* dispDist
+dispY = sin(dispDeg)* dispDist
 
 ### lat & long data are repeated, but random values are added so not all conspecific occurrences are right on top of each other
 
