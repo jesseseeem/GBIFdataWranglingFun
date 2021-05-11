@@ -42,9 +42,16 @@ randomLong = runif(length(fakeGeneraOccurrences), min = -180, max = 180)
 
 fakeOccurrenceData = data.frame(fakeGeneraOccurrences, fakeLatOccurrences, fakeLongOccurrences, fakeFakeLatOccurences, fakeFakeLongOccurrences, randomLat, randomLong)
 
-fakeOccurrenceData = fakeOccurrenceData[which(fakeOccurrenceData$fakeLatOccurrences >-80 & fakeOccurrenceData$fakeLatOccurrences < 90 & fakeOccurrenceData$fakeLongOccurrences > -180 & fakeOccurrenceData$fakeLongOccurrences < 180), ]
-
-
+fakeOccurrenceData = fakeOccurrenceData[which(
+	fakeOccurrenceData$fakeLatOccurrences >-80 & 
+	fakeOccurrenceData$fakeLatOccurrences < 90 & 
+	fakeOccurrenceData$fakeLongOccurrences > -180 & 
+	fakeOccurrenceData$fakeLongOccurrences < 180 & 
+	fakeOccurrenceData$fakeFakeLatOccurences >-80 & 
+	fakeOccurrenceData$fakeFakeLatOccurences < 90 & 
+	fakeOccurrenceData$fakeFakeLongOccurrences > -180 & 
+	fakeOccurrenceData$fakeFakeLongOccurrences < 180
+	), ]
 
 
 # hexFake <- ggplot(fakeOccurrenceData, aes(x = fakeLongOccurrences, y = fakeLatOccurrences)) +
