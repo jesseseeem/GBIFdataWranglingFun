@@ -32,13 +32,20 @@ fakeSADrepValues = fakeSAD$q(seq(0, 1, length = (taxonRichness + 1)))
 
 ### use that species abundance distribution to repeat genus names
 fakeGeneraOccurrences = rep(fakeGenera, c(fakeSADrepValues[1:taxonRichness]))
-### lat & long data are repeated, but random values are added so not all conspecific occurrences are right on top of each other
-### cauchy distribution has some good outliers occasionally (including some that will be off the grid)
-fakeLatOccurrences = rep(fakeLats, c(fakeSADrepValues[1:taxonRichness])) + rcauchy(length(fakeGeneraOccurrences), location = 0, scale = 0.5)
-fakeLongOccurrences = rep(fakeLongs, c(fakeSADrepValues[1:taxonRichness])) + rcauchy(length(fakeGeneraOccurrences), location = 0, scale = 0.5)
 
-fakeFakeLatOccurences = rep(fakeFakeLat, c(fakeSADrepValues[1:taxonRichness])) + rcauchy(length(fakeGeneraOccurrences), location = 0, scale = 0.5)
-fakeFakeLongOccurrences = rep(fakeFakeLong, c(fakeSADrepValues[1:taxonRichness])) + rcauchy(length(fakeGeneraOccurrences), location = 0, scale = 0.5)
+### generate random degrees and distances from original taxon other members should be (numbers to add to lat and long)
+dispDeg = runif(length(fakeGeneraOccurrences), min = 0, max = 360)
+dispDist = abs(rcauchy(length(fakeGeneraOccurrences), location = 0, scale = 1))
+dispX = cos(dispDeg)* PossibleDispDist
+dispY = sin(dispDeg)* PossibleDispDist
+
+### lat & long data are repeated, but random values are added so not all conspecific occurrences are right on top of each other
+
+fakeLatOccurrences = rep(fakeLats, c(fakeSADrepValues[1:taxonRichness])) + dispY
+fakeLongOccurrences = rep(fakeLongs, c(fakeSADrepValues[1:taxonRichness])) + dispX
+
+fakeFakeLatOccurences = rep(fakeFakeLat, c(fakeSADrepValues[1:taxonRichness])) + dispY
+fakeFakeLongOccurrences = rep(fakeFakeLong, c(fakeSADrepValues[1:taxonRichness])) + dispX
 
 randomLat = runif(length(fakeGeneraOccurrences), min = -90, max = 90)
 randomLong = runif(length(fakeGeneraOccurrences), min = -180, max = 180)
