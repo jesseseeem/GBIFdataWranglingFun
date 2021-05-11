@@ -101,17 +101,35 @@ ggplot(fakeOccurrenceData, aes(x = randomLong, y = randomLat, z = fakeGeneraOccu
 	labs(title = "Fake genus richness per 1 x 1 random degree")
 
 
-### make a subset of the database that's only the most common genera
-onlyCommonGenera = fakeOccurrenceData[which(
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[1] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[2] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[3] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[4] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[5] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[6] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[7] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[8] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[9] |
-	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[10]
-	), ]
+### make a subset of the database that's only the 20 most common genera
+mostCommonGenera = fakeGenera[49980:50000]
 
+### initialize the new data.frame, then do the other 19 common genera with a loop
+onlyCommonGenera = fakeOccurrenceData[which(fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[1]), ]
+
+for (i in 2:20){
+	onlyCommonGeneraSubset = fakeOccurrenceData[which(
+		fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[i]), ]
+
+	onlyCommonGenera = rbind(onlyCommonGenera, onlyCommonGeneraSubset)
+	}
+
+### visualize the geography of species distributions under different lat/long rules
+dev.new()
+ggplot(onlyCommonGenera, aes(fakeLongOccurrences, fakeLatOccurrences, colour = as.character(fakeGeneraOccurrences))) + 
+	theme_minimal() +
+	geom_point(size = .5) + 
+	labs(title = "20 most common genera fakeLat ~ fakeLong")
+
+
+dev.new()
+ggplot(onlyCommonGenera, aes(fakeFakeLongOccurrences, fakeFakeLatOccurences, colour = as.character(fakeGeneraOccurrences))) + 
+	theme_minimal() +
+	geom_point(size = .5) + 
+	labs(title = "20 most common genera fakeFakeLat ~ fakeFakeLong")
+
+dev.new()
+ggplot(onlyCommonGenera, aes(randomLong, randomLat, colour = as.character(fakeGeneraOccurrences))) + 
+	theme_minimal() +
+	geom_point(size = .5) + 
+	labs(title = "20 most common genera randomLat ~ randomLong")
