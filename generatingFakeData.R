@@ -101,3 +101,17 @@ ggplot(fakeOccurrenceData, aes(x = randomLong, y = randomLat, z = fakeGeneraOccu
 	labs(title = "Fake genus richness per 1 x 1 random degree")
 
 
+### make a subset of the database that's only the most common genera
+onlyCommonGenera = fakeOccurrenceData[which(
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[1] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[2] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[3] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[4] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[5] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[6] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[7] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[8] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[9] |
+	fakeOccurrenceData$fakeGeneraOccurrences == mostCommonGenera[10]
+	), ]
+
