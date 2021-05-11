@@ -64,7 +64,7 @@ write.table(fakeOccurrenceData, "fakeGenera4daniel.csv", sep = ",", quote = FALS
 #
 # plot(hexFake)
 
-
+### visualize patterns of genus richness
 
 dev.new()
 ggplot(fakeOccurrenceData, aes(x = fakeLongOccurrences, y = fakeLatOccurrences, z = fakeGeneraOccurrences))+
@@ -73,6 +73,31 @@ ggplot(fakeOccurrenceData, aes(x = fakeLongOccurrences, y = fakeLatOccurrences, 
 		binwidth = c(1, 1))+
 		scale_fill_distiller(palette="YlGnBu")+
 	theme_minimal() +
-	labs(title = "Fake genus richness per 1 x 1 degree")
+	labs(title = "Fake genus richness per 1 x 1 fake degree")
+
+
+### above should have more of a latitudinal gradient and longitudinal hot-spots (like over-simplified coastlines)
+### below should have more evenly distributed diversity, but still high beta-diversity
+
+dev.new()
+ggplot(fakeOccurrenceData, aes(x = fakeFakeLongOccurrences, y = fakeFakeLatOccurences, z = fakeGeneraOccurrences))+
+	stat_summary_hex(
+		fun = function(z){log10(length(unique(z)))}, 
+		binwidth = c(1, 1))+
+		scale_fill_distiller(palette="YlGnBu")+
+	theme_minimal() +
+	labs(title = "Fake genus richness per 1 x 1 fake-fake degree")
+
+
+### below all the "lat/long" values are totaly randomized, so abundant species should be evenly distributed around the world
+
+dev.new()
+ggplot(fakeOccurrenceData, aes(x = randomLong, y = randomLat, z = fakeGeneraOccurrences))+
+	stat_summary_hex(
+		fun = function(z){log10(length(unique(z)))}, 
+		binwidth = c(1, 1))+
+		scale_fill_distiller(palette="YlGnBu")+
+	theme_minimal() +
+	labs(title = "Fake genus richness per 1 x 1 random degree")
 
 
