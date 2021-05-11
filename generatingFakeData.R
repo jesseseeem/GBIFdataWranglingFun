@@ -53,6 +53,8 @@ fakeOccurrenceData = fakeOccurrenceData[which(
 	fakeOccurrenceData$fakeFakeLongOccurrences < 180
 	), ]
 
+### write out data as a CSV
+write.table(fakeOccurrenceData, "fakeGenera4daniel.csv", sep = ",", quote = FALSE)
 
 # hexFake <- ggplot(fakeOccurrenceData, aes(x = fakeLongOccurrences, y = fakeLatOccurrences)) +
 #	theme_minimal() +
