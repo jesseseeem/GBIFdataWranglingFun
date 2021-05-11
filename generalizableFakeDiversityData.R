@@ -7,12 +7,11 @@ library(viridis)
 taxonRichness = 10000
 totalObservations = 5000000
 
-maxLat = runif(taxonRichness, min = -70, max = 90)
-minLat = runif(taxonRichness, min = -30, max = 30)
-fakeLats = (maxLat + minLat)/2 + rcauchy(taxonRichness, location = 0, scale = 1)
+latSeed = rcauchy(9999, location = 0, scale = 10) + runif(9999, -30, 30) + sample(c( 0, 0, 0, 0, 1, 15, -20, 30), 9999, replace = TRUE)
+latSeedLim = latSeed[which(latSeed > -90 & latSeed < 90)]
+fakeLats = sample(latSeedLim, taxonRichness, replace = TRUE)
 
-
-longCauchy = sample(c(125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 0, -125, -60, 45), 10000, replace = TRUE) + rcauchy(10000, location = 0, scale = 5)
+longCauchy = sample(c(125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 115, 175, 0, -125, -60, -80, 45), 10000, replace = TRUE) + rcauchy(10000, location = 0, scale = 5)
 
 longCauchySubset = longCauchy[ which(longCauchy < 180 & longCauchy > -180)]
 fakeLongs = sample(longCauchySubset, taxonRichness, replace = TRUE)
