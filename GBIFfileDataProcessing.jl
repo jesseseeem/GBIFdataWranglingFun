@@ -36,13 +36,13 @@ subset_molluscGBIF = DataFrame(lat = GBIF_mollusc.decimalLatitude,
 subset_molluscGBIF_goodData = dropmissing(subset_molluscGBIF, [:lat, :long, :genusKey, :genus, :acceptedTaxonKey]);
 
 ### write out entire subsetted dataset 
-CSV.write("subsetGBIF_molluscDataSorted.csv", DataFrame(sort!(subset_molluscGBIF_generaIDs_goodLatLong, :randomsorter)), bufsize = 4194304000);
+CSV.write("subset_molluscGBIF_goodData.csv", DataFrame(subset_molluscGBIF_goodData), bufsize = 4194304000);
 
 ### only write out a subset of 10k occurrences (rows)
-CSV.write("subSubsetGBIF_molluscDataSorted.csv", DataFrame((subset_molluscGBIF_generaIDs_goodLatLong[1:10000, :])), bufsize = 4194304000);
+CSV.write("subset_molluscGBIF_goodData500k.csv", DataFrame((sort!(subset_molluscGBIF_goodData, :randomsorter3)[1:500000, :])), bufsize = 4194304000);
 
 ### only keep occurrences of taxa that have been ranked by the IUCN
-subset_molluscGBIF_generaIDs_goodLatLong_IUCN = dropmissing(subset_molluscGBIF_generaIDs_goodLatLong, :iucnCat); 
+subset_molluscGBIF_generaIDs_goodLatLong_IUCN = dropmissing(subset_molluscGBIF_goodData, :iucnCat); 
 
 ### use the other random sorter column so this subset won't necessarily contain many species from the previous 10k subset
 sort!(subset_molluscGBIF_generaIDs_goodLatLong_IUCN, :randomsorter2); 
