@@ -43,3 +43,5 @@ insertcols!(GBIF_coleo_aus_summary, 7,  :lat_range => GBIF_coleo_aus_summary.lat
 
 insertcols!(GBIF_coleo_aus_summary, 8,  :lat_mid => (GBIF_coleo_aus_summary.lat_maximum + GBIF_coleo_aus_summary.lat_minimum)/2);
 
+### write out summary stats file
+CSV.write("GBIF_coleo_aus_summaryStats.csv", DataFrame(GBIF_coleo_aus_summary), bufsize = 4194304000);
