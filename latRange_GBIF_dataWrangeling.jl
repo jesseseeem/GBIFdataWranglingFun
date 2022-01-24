@@ -1,3 +1,7 @@
+### if necessary, can use bash to convert occurrence datafile into csv 
+### cat australia_echinoderms_occurrence.txt | tr "\\t" "," > australia_echinoderms_occurrence.csv
+
+
 using DataFrames, CSV, Tables, Random
 ### change file names to match which taxa you're actually filtering... 
 
