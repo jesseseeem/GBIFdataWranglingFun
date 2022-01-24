@@ -33,3 +33,13 @@ CSV.write("subset_GBIF_coleo_NA.csv", DataFrame(subsubSUBset), bufsize = 4194304
 
 ### make dataframe with the lat min, lat max, and count for each species (accepted taxon key)
 GBIF_coleo_aus_summary = combine(groupby(subsubSUBset, :acceptedTaxonKey), :lat => maximum, :lat => minimum, nrow);
+
+### add other columns
+insertcols!(GBIF_coleo_aus_summary, 5,  :continent => repeat(["australia"], size(GBIF_coleo_aus_summary)[1]));
+
+insertcols!(GBIF_coleo_aus_summary, 6,  :taxon => repeat(["coleoptera"], size(GBIF_coleo_aus_summary)[1]));
+
+insertcols!(GBIF_coleo_aus_summary, 7,  :lat_range => GBIF_coleo_aus_summary.lat_maximum - GBIF_coleo_aus_summary.lat_minimum);
+
+insertcols!(GBIF_coleo_aus_summary, 8,  :lat_mid => (GBIF_coleo_aus_summary.lat_maximum + GBIF_coleo_aus_summary.lat_minimum)/2);
+
