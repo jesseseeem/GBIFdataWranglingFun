@@ -30,3 +30,6 @@ subsubset = dropmissing(subset_GBIF_coleo_NA, [:lat, :long, :genusKey, :genus, :
 subsubSUBset = subset(subsubset, :taxonRank => ByRow(taxonRank -> taxonRank == "SPECIES"));
 ### write it out! 
 CSV.write("subset_GBIF_coleo_NA.csv", DataFrame(subsubSUBset), bufsize = 4194304000);
+
+### make dataframe with the lat min, lat max, and count for each species (accepted taxon key)
+GBIF_coleo_aus_summary = combine(groupby(subsubSUBset, :acceptedTaxonKey), :lat => maximum, :lat => minimum, nrow);
