@@ -1,0 +1,92 @@
+### ugh. I'm dumb
+
+### GBIF data comes as tab-delimited, but often has commas in which I think throw off programs, so:
+### take out commas
+
+sed 's/,//g' insects_world_occurrence.txt > insects_world_occurrenceNoCommas.txt
+
+### split file into ~40 files with about 800,000 lines each so it is more manageable:
+
+sed -n '1,800000p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas1.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas2.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas3.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas4.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas5.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas6.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas7.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas8.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas9.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas10.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas11.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas12.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas13.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas14.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas15.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas16.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas17.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas18.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas19.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas20.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas21.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas22.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas23.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas24.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas25.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas26.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas27.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas28.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas29.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas30.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas31.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas32.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas33.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas34.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas35.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas36.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas37.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas38.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas39.txt
+sed -n '1,1p' insects_world_occurrenceNoCommas.txt > insects_world_occurrenceNoCommas40.txt
+
+
+
+sed -n '800001,1600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas2.txt
+sed -n '1600001,2400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas3.txt
+sed -n '2400001,3200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas4.txt
+sed -n '3200001,4000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas5.txt
+sed -n '4000001,4800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas6.txt
+sed -n '4800001,5600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas7.txt
+sed -n '5600001,7200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas8.txt
+sed -n '7200001,8000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas9.txt
+sed -n '8000001,8800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas10.txt
+sed -n '8800001,9600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas11.txt
+sed -n '9600001,10400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas12.txt
+sed -n '10400001,11200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas13.txt
+sed -n '11200001,12000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas14.txt
+sed -n '12000001,12800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas15.txt
+sed -n '12800001,13600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas16.txt
+sed -n '13600001,14400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas17.txt
+sed -n '14400001,15200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas18.txt
+sed -n '15200001,16000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas19.txt
+sed -n '16000001,16800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas20.txt
+sed -n '16800001,17600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas21.txt
+sed -n '17600001,18400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas22.txt
+sed -n '18400001,19200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas23.txt
+sed -n '19200001,20000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas24.txt
+sed -n '20000001,20800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas25.txt
+sed -n '20800001,21600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas26.txt
+sed -n '21600001,22400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas27.txt
+sed -n '22400001,23200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas28.txt
+sed -n '23200001,24000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas29.txt
+sed -n '24000001,24800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas30.txt
+sed -n '24800001,25600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas31.txt
+sed -n '25600001,26400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas32.txt
+sed -n '26400001,27200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas33.txt
+sed -n '27200001,28000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas34.txt
+sed -n '28000001,28800000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas35.txt
+sed -n '28800001,29600000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas36.txt
+sed -n '29600001,30400000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas37.txt
+sed -n '30400001,31200000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas38.txt
+sed -n '31200001,32000000' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas39.txt
+sed -n '32000001,32382024' insects_world_occurrenceNoCommas.txt >> insects_world_occurrenceNoCommas40.txt
+
