@@ -41,3 +41,53 @@ ggplot(invertWorld10plusBalanced, aes(x= lat_mid, y= log2(lat_range+1), color=ta
 	geom_point() + 
 	geom_smooth(method= loess, aes(fill= taxon))
 
+
+### further adventures in subsetting 
+library(tibble)
+library(dplyr)
+library(groupdata2)
+
+
+### read in the summary statistics (lat range, lat midpoint, etc for each taxon)
+### each row is a taxon (unique "acceptedTaxonKey")
+### nrow column is how many occurrences per taxon
+echinoWorld = read.table(file = "GBIF_echino_world_summaryStats.csv", sep = ",", header = T)
+
+### read in the occurrence data 
+### each row is one observation
+echinoWorldOcc = read.table(file = "subset_GBIF_echino_world.csv", sep = ",", header = T)
+
+### subset of rare taxa (between 5 and 20 occurrences)
+echinoWorld_5to20 = subset(echinoWorld, nrow > 4)
+echinoWorld_5to20 = subset(echinoWorld_5to20, nrow < 21)
+
+### subset of moderately rare taxa (20 to 100 occurrences)
+echinoWorld_20to100 = subset(echinoWorld, nrow < 101)
+echinoWorld_20to100 = subset(echinoWorld_20to100, nrow > 19) 
+
+### I don't know if it's necessary to convert to tibble for the rest of the stuff to work
+### might be able to skip
+echinoWorldOcc_tib = as_tibble(echinoWorldOcc)
+
+echinoWorld_5to20_tib = as_tibble(echinoWorld_5to20)
+
+### pull out the occurrences from the taxa that only occur 5 to 20 times
+echinoWorldOcc_5to20 = semi_join(echinoWorldOcc_tib, echinoWorld_5to20_tib, by = "acceptedTaxonKey")
+
+echinoWorld_20to100_tib = as_tibble(echinoWorld_20to100)
+
+### pull out the occurrences from the taxa that occur 20 to 100 times
+echinoWorldOcc_20to100 = semi_join(echinoWorldOcc_tib, echinoWorld_20to100_tib, by = "acceptedTaxonKey")
+
+### downsample the occurrence data so that each taxon occurs the least number of times (20 or 5, respectively)
+### I think it might be important to standarize occurrence number per taxon, in case e.g., lepidoptera are biased 
+### towards more 100 occurrences, stylommatophora are biased towards more 20 occurrences, etc
+
+echinoWorldOcc_20to100_downsampled = downsample(echinoWorldOcc_20to100, cat_col="acceptedTaxonKey")
+echinoWorldOcc_5to20_downsampled = downsample(echinoWorldOcc_5to20, cat_col="acceptedTaxonKey")
+
+### write it out! 
+write.csv(echinoWorldOcc_5to20_downsampled, "echinoWorldOcc_5to20_downsampled.csv", quote = FALSE, row.names = FALSE)
+write.csv(echinoWorldOcc_5to20, "echinoWorldOcc_5to20.csv", quote = FALSE, row.names = FALSE)
+write.csv(echinoWorldOcc_20to100_downsampled, "echinoWorldOcc_20to100_downsampled.csv", quote = FALSE, row.names = FALSE)
+write.csv(echinoWorldOcc_20to100, "echinoWorldOcc_20to100.csv", quote = FALSE, row.names = FALSE)
