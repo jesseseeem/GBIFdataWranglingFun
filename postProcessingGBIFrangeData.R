@@ -57,6 +57,12 @@ echinoWorld = read.table(file = "GBIF_echino_world_summaryStats.csv", sep = ",",
 ### each row is one observation
 echinoWorldOcc = read.table(file = "subset_GBIF_echino_world.csv", sep = ",", header = T)
 
+### for large files, readr might be worth using for reading in
+### library(readr)
+### lepWorldOcc = read_csv("subset_GBIF_lepidopt_world_all.csv", col_names = TRUE)
+
+
+
 ### subset of rare taxa (between 5 and 20 occurrences)
 echinoWorld_5to20 = subset(echinoWorld, nrow > 4)
 echinoWorld_5to20 = subset(echinoWorld_5to20, nrow < 21)
