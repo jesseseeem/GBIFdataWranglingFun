@@ -1,0 +1,31 @@
+library(dggridR)
+library(dplyr)
+library(readr)
+
+styloWorld = read_csv("styloWorldOcc_20to100_downsampled.csv")
+
+cellSize = 1000 ### spacing in dgconstruct, in km
+habitatLoss = 1/2 ### needs to be 1/integer
+taxon = "stylo"
+
+
+dggs = dgconstruct(spacing= cellSize, metric=TRUE, resround='down')
+styloWorld$cell <- dgGEO_to_SEQNUM(dggs, styloWorld$long, styloWorld$lat)$seqnum
+randomSorter = rep(1:(1/habitatLoss), length(unique(styloWorld$cell)))[1:length(unique(styloWorld$cell))]
+percentExtant = c()
+
+for (i in 1:20){
+	styloSquareScrambler = data.frame(cell = unique(styloWorld$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
+	styloWorldCellScramble = left_join(styloWorld, styloSquareScrambler, by = "cell")
+	subsetStylo = subset(styloWorldCellScramble, styloWorldCellScramble$randomSorter==1)
+	percentExtant = c(percentExtant, length(unique(subsetStylo$acceptedTaxonKey))/length(unique(styloWorldCellScramble$acceptedTaxonKey)))
+
+}
+
+median(percentExtant)
+percentExtant
+
+HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize, habitatLoss = habitatLoss, taxon = taxon)
+
+HLES_total = rbind(HLES_total, HLES)
+
