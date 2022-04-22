@@ -5,7 +5,7 @@ library(readr)
 styloWorld = read_csv("styloWorldOcc_20to100_downsampled.csv")
 
 cellSize = 1000 ### spacing in dgconstruct, in km
-habitatLoss = 1/2 ### needs to be 1/integer
+habitatLoss = 1/2 ### needs to be 1/integer...this is actually proportion of habitat retained, not habitat lost
 taxon = "stylo"
 
 
