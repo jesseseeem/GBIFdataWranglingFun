@@ -33,4 +33,5 @@ percentExtant
 HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize, habitatLoss = habitatLoss, taxon = taxon)
 
 HLES_total = rbind(HLES_total, HLES)
+write.table(HLES, "HLES_total.csv", row.names = FALSE, sep = ",", quote = FALSE, append = TRUE)
 
