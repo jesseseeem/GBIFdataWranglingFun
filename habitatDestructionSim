@@ -3,35 +3,34 @@ library(dplyr)
 library(readr)
 
 ###initialize dataframe to store results
-HLES_total = data.frame(percentSurvive = c(), cellSize = c(), habitatLoss = c(), taxon = c())
+HLES_total = data.frame(percentSurvive = c(), cellSize = c(), habitatRemaining = c(), taxon = c())
+write.table(HLES_total, "HLES_total.csv", row.names = FALSE, sep = ",", quote = FALSE)
 
 ### read in occurrence data
 styloWorld = read_csv("styloWorldOcc_20to100_downsampled.csv")
 
+### resolution notes see table on https://github.com/r-barnes/dggridR/
+cellSize = c(1:14)
+habitatLeft = 1/c(1:10)
+### needs to be 1/integer...this is the proportion of habitat retained, not habitat lost
+taxon = "stylo" ### change this depending on dataset
 
-cellSize = 1000 ### spacing in dgconstruct, in km
-habitatLoss = 1/2 ### needs to be 1/integer...this is actually proportion of habitat retained, not habitat lost
-taxon = "stylo"
-
-
-dggs = dgconstruct(spacing= cellSize, metric=TRUE, resround='down')
-styloWorld$cell <- dgGEO_to_SEQNUM(dggs, styloWorld$long, styloWorld$lat)$seqnum
-randomSorter = rep(1:(1/habitatLoss), length(unique(styloWorld$cell)))[1:length(unique(styloWorld$cell))]
-percentExtant = c()
-
-for (i in 1:20){
-	styloSquareScrambler = data.frame(cell = unique(styloWorld$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
-	styloWorldCellScramble = left_join(styloWorld, styloSquareScrambler, by = "cell")
-	subsetStylo = subset(styloWorldCellScramble, styloWorldCellScramble$randomSorter==1)
-	percentExtant = c(percentExtant, length(unique(subsetStylo$acceptedTaxonKey))/length(unique(styloWorldCellScramble$acceptedTaxonKey)))
-
+for (j in 1:14){
+	for (k in 1:10){
+		dggs = dgconstruct(res = cellSize[j])
+		styloWorld$cell <- dgGEO_to_SEQNUM(dggs, styloWorld$long, styloWorld$lat)$seqnum
+		randomSorter = rep(1:(1/habitatLeft[k]), length(unique(styloWorld$cell)))[1:length(unique(styloWorld$cell))]
+		percentExtant = c()
+			for (i in 1:20){
+				styloSquareScrambler = data.frame(cell = unique(styloWorld$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
+				styloWorldCellScramble = left_join(styloWorld, styloSquareScrambler, by = "cell")
+				subsetStylo = subset(styloWorldCellScramble, styloWorldCellScramble$randomSorter==1)
+				percentExtant = c(percentExtant, length(unique(subsetStylo$acceptedTaxonKey))/length(unique(styloWorldCellScramble$acceptedTaxonKey)))
+			}
+		
+		HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize[j], habitatRemaining = habitatLeft[k], taxon = taxon)
+		HLES_total = rbind(HLES_total, HLES)
+		write.table(HLES, "HLES_total.csv", row.names = FALSE, col.names = FALSE, sep = ",", quote = FALSE, append = TRUE)	
+	}
 }
-
-median(percentExtant)
-percentExtant
-
-HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize, habitatLoss = habitatLoss, taxon = taxon)
-
-HLES_total = rbind(HLES_total, HLES)
-write.table(HLES, "HLES_total.csv", row.names = FALSE, sep = ",", quote = FALSE, append = TRUE)
 
