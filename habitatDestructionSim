@@ -11,8 +11,8 @@ styloWorld = read_csv("styloWorldOcc_20to100_downsampled.csv")
 
 ### resolution notes see table on https://github.com/r-barnes/dggridR/
 cellSize = c(1:14)
-habitatLeft = 1/c(1:10)
-### needs to be 1/integer...this is the proportion of habitat retained, not habitat lost
+habitatLeft = 1/c(2:10)
+### needs to be 1/integer...this is the proportion of habitat retained, not habitat lost (starts at 1/2 because 1/1 would be all habitat retained)
 taxon = "stylo" ### change this depending on dataset
 
 for (j in 1:14){
