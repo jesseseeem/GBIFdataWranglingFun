@@ -3,8 +3,8 @@ library(dplyr)
 library(readr)
 
 ###initialize dataframe to store results
-HLES_total = data.frame(percentSurvive = c(), cellSize = c(), habitatRemaining = c(), taxon = c())
-write.table(HLES_total, "HLES_total.csv", row.names = FALSE, sep = ",", quote = FALSE)
+HLES_total = data.frame(percentSurvive = c(NA), cellSize = c(NA), habitatRemaining = c(NA), taxon = c(NA))
+write.table(na.omit(HLES_total), "HLES_total.csv", row.names = FALSE, col.names = TRUE, sep = ",", quote = FALSE)
 
 ### read in occurrence data
 styloWorld = read_csv("styloWorldOcc_20to100_downsampled.csv")
