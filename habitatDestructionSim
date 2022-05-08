@@ -1,31 +1,57 @@
 library(dggridR)
 library(dplyr)
 library(readr)
+library(groupdata2)
+library(tibble)
+
+### read in the summary statistics (lat range, lat midpoint, etc for each taxon)
+### each row is a taxon (unique "acceptedTaxonKey")
+### nrow column is how many occurrences per taxon
+basidiosWorld = read_csv("GBIF_basidios_world_summaryStats.csv", col_names = TRUE)
+
+### read in the occurrence data 
+### each row is one observation
+basidiosWorldOcc = read_csv("subset_GBIF_basidios_world.csv", col_names = TRUE)
+
+### originally I made a dataset of only taxa with occurrences between 20 and 100 occurrences
+### but I think it maybe makes more sense to just use all taxa with at least 20 occurrences 
+basidiosWorld_20plus = subset(basidiosWorld, nrow > 19)
+
+basidiosWorldOcc_tib = as_tibble(basidiosWorldOcc)
+basidiosWorld_20plus_tib = as_tibble(basidiosWorld_20plus)
+
+### pull out the occurrences from the taxa that occur at least 20 times
+basidiosWorldOcc_20plus = semi_join(basidiosWorldOcc_tib, basidiosWorld_20plus_tib, by = "acceptedTaxonKey")
+
+basidiosWorldOcc_20plus_downsampled = downsample(basidiosWorldOcc_20plus, cat_col="acceptedTaxonKey")
+
+write.csv(basidiosWorldOcc_20plus_downsampled, "basidiosWorldOcc_20plus_downsampled.csv", quote = FALSE, row.names = FALSE)
+write.csv(basidiosWorldOcc_20plus, "basidiosWorldOcc_20plus.csv", quote = FALSE, row.names = FALSE)
 
 ###initialize dataframe to store results
 HLES_total = data.frame(percentSurvive = c(NA), cellSize = c(NA), habitatRemaining = c(NA), taxon = c(NA))
 write.table(na.omit(HLES_total), "HLES_total.csv", row.names = FALSE, col.names = TRUE, sep = ",", quote = FALSE)
 
 ### read in occurrence data
-styloWorld = read_csv("styloWorldOcc_20to100_downsampled.csv")
+basidiosWorld = read_csv("basidiosWorldOcc_20plus_downsampled.csv")
 
 ### resolution notes see table on https://github.com/r-barnes/dggridR/
 cellSize = c(1:14)
 habitatLeft = 1/c(2:10)
 ### needs to be 1/integer...this is the proportion of habitat retained, not habitat lost (starts at 1/2 because 1/1 would be all habitat retained)
-taxon = "stylo" ### change this depending on dataset
+taxon = "basidios" ### change this depending on dataset
 
 for (j in 1:14){
 	for (k in 1:10){
 		dggs = dgconstruct(res = cellSize[j])
-		styloWorld$cell <- dgGEO_to_SEQNUM(dggs, styloWorld$long, styloWorld$lat)$seqnum
-		randomSorter = rep(1:(1/habitatLeft[k]), length(unique(styloWorld$cell)))[1:length(unique(styloWorld$cell))]
+		basidiosWorld$cell <- dgGEO_to_SEQNUM(dggs, basidiosWorld$long, basidiosWorld$lat)$seqnum
+		randomSorter = rep(1:(1/habitatLeft[k]), length(unique(basidiosWorld$cell)))[1:length(unique(basidiosWorld$cell))]
 		percentExtant = c()
 			for (i in 1:20){
-				styloSquareScrambler = data.frame(cell = unique(styloWorld$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
-				styloWorldCellScramble = left_join(styloWorld, styloSquareScrambler, by = "cell")
-				subsetStylo = subset(styloWorldCellScramble, styloWorldCellScramble$randomSorter==1)
-				percentExtant = c(percentExtant, length(unique(subsetStylo$acceptedTaxonKey))/length(unique(styloWorldCellScramble$acceptedTaxonKey)))
+				basidiosSquareScrambler = data.frame(cell = unique(basidiosWorld$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
+				basidiosWorldCellScramble = left_join(basidiosWorld, basidiosSquareScrambler, by = "cell")
+				subsetbasidios = subset(basidiosWorldCellScramble, basidiosWorldCellScramble$randomSorter==1)
+				percentExtant = c(percentExtant, length(unique(subsetbasidios$acceptedTaxonKey))/length(unique(basidiosWorldCellScramble$acceptedTaxonKey)))
 			}
 		
 		HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize[j], habitatRemaining = habitatLeft[k], taxon = taxon)
@@ -33,4 +59,3 @@ for (j in 1:14){
 		write.table(HLES, "HLES_total.csv", row.names = FALSE, col.names = FALSE, sep = ",", quote = FALSE, append = TRUE)	
 	}
 }
-
