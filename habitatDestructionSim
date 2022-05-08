@@ -42,7 +42,7 @@ habitatLeft = 1/c(2:10)
 taxon = "basidios" ### change this depending on dataset
 
 for (j in 1:14){
-	for (k in 2:10){
+	for (k in 1:9){
 		dggs = dgconstruct(res = cellSize[j])
 		basidiosWorld$cell <- dgGEO_to_SEQNUM(dggs, basidiosWorld$long, basidiosWorld$lat)$seqnum
 		randomSorter = rep(1:(1/habitatLeft[k]), length(unique(basidiosWorld$cell)))[1:length(unique(basidiosWorld$cell))]
