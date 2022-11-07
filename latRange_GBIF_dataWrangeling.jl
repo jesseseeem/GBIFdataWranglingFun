@@ -34,11 +34,11 @@ subset_GBIF_basidio = DataFrame(lat = GBIF_basidio.decimalLatitude,
 		randomsorter3 = (randn(rnum) .+ rand(1000:9999,rnum))); 
 
 ### get rid of missing values
-subsubset = dropmissing(subset_GBIF_basidio_NA, [:lat, :long, :genusKey, :genus, :acceptedTaxonKey, :taxonRank]);
+subsubset_basidio = dropmissing(subset_GBIF_basidio, [:lat, :long, :genusKey, :genus, :acceptedTaxonKey, :taxonRank]);
 ### filter for only taxa identified to species
-subsubSUBset = subset(subsubset, :taxonRank => ByRow(taxonRank -> taxonRank == "SPECIES"));
+subsubSUBset_basidio = subset(subsubset_basidio, :taxonRank => ByRow(taxonRank -> taxonRank == "SPECIES"));
 ### write it out! 
-CSV.write("subset_GBIF_basidio.csv", DataFrame(subsubSUBset), bufsize = 4194304000);
+CSV.write("subset_GBIF_basidio.csv", DataFrame(subsubSUBset_basidio), bufsize = 4194304000);
 
 ### make dataframe with the lat min, lat max, and count for each species (accepted taxon key)
 GBIF_basidio_summary = combine(groupby(subsubSUBset, :acceptedTaxonKey), :lat => maximum, :lat => minimum, nrow);
