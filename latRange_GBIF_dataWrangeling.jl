@@ -9,26 +9,26 @@ using DataFrames, CSV, Tables, Random
 ### change file names to match which taxa you're actually filtering... 
 
 ### assuming tab-delimited file, which is how GBIF downloads things by default
-GBIF_basidio_NA = CSV.read("basidios_world_occurrence.txt", DataFrame; delim = "\t", header = true);
+GBIF_basidio = CSV.read("basidios_world_occurrence.txt", DataFrame; delim = "\t", header = true);
 
-rnum = size(GBIF_basidio_NA)[1]
+rnum = size(GBIF_basidio)[1]
 
 ### reduce number of columns to just the data we're interested in, 
 ### and add two columns of random numbers we can use to sort the data into different subsets
 
-subset_GBIF_basidio_NA = DataFrame(lat = GBIF_basidio.decimalLatitude, 
+subset_GBIF_basidio = DataFrame(lat = GBIF_basidio.decimalLatitude, 
                long = GBIF_basidio.decimalLongitude,
                umbrellaTaxon = repeat(["basidio"], rnum),
-               order = GBIF_basidio_NA.order, 
-               family = GBIF_basidio_NA.family, 
-               genus = GBIF_basidio_NA.genus, 
-               genusKey = GBIF_basidio_NA.genusKey,
-		species = GBIF_basidio_NA.specificEpithet,
-		acceptedTaxonKey = GBIF_basidio_NA.acceptedTaxonKey,
-               gbifID = GBIF_basidio_NA.gbifID, 
-               iucnCat = GBIF_basidio_NA.iucnRedListCategory, 
-               taxonRank = GBIF_basidio_NA.taxonRank, 
-               occurrenceStatus = GBIF_basidio_NA.occurrenceStatus, 
+               order = GBIF_basidio.order, 
+               family = GBIF_basidio.family, 
+               genus = GBIF_basidio.genus, 
+               genusKey = GBIF_basidio.genusKey,
+		species = GBIF_basidio.specificEpithet,
+		acceptedTaxonKey = GBIF_basidio.acceptedTaxonKey,
+               gbifID = GBIF_basidio.gbifID, 
+               iucnCat = GBIF_basidio.iucnRedListCategory, 
+               taxonRank = GBIF_basidio.taxonRank, 
+               occurrenceStatus = GBIF_basidio.occurrenceStatus, 
                randomsorter = (randn(rnum) .+ rand(-90:90,rnum)),
                randomsorter2 = (randn(rnum) .+ rand(-180:180,rnum)),
 		randomsorter3 = (randn(rnum) .+ rand(1000:9999,rnum))); 
