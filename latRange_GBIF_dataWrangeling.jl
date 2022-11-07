@@ -1,11 +1,14 @@
 ### if necessary, can use bash to convert occurrence datafile into csv 
 ### first remove all commas from the .txt file (there are often commas)
-### cat australia_echinoderms_occurrence.txt | tr "\\t" "," > australia_echinoderms_occurrence.csv
+### sed 's/,//g'  basidios_world_occurrence.txt > basidios_world_occurrenceNoCommas.txt
+### then replace tab-delimiters with commas to make it a CSV file
+### cat basidios_world_occurrenceNoCommas.txt | tr "\\t" "," > basidios_world_occurrence.csv
 
 
 using DataFrames, CSV, Tables, Random
 ### change file names to match which taxa you're actually filtering... 
 
+### assuming tab-delimited file, which is how GBIF downloads things by default
 GBIF_basidio_NA = CSV.read("basidios_world_occurrence.txt", DataFrame; delim = "\t", header = true);
 
 rnum = size(GBIF_basidio_NA)[1]
