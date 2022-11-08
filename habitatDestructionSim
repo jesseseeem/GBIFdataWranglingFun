@@ -3,6 +3,7 @@ library(dplyr)
 library(readr)
 library(groupdata2)
 library(tibble)
+library(tidyr)
 
 occurrence = read.table(file = "subset_GBIF_combinedTaxa.csv", header = T, sep = ",")
 summaryStats = read.table(file = "GBIF_combinedTaxon_summary.csv", header = T, sep = ",")
@@ -81,4 +82,5 @@ HLES_full = read.table(file = "HLES_total.csv", header = T, sep = ',')
 
 ### reshape into wide format so we can compare how survival proportion is correlated among taxa
 
+HLES_full_wide = HLES_full %>% pivot_wider(names_from = taxon, values_from = percentSurvive)
 
