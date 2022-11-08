@@ -29,33 +29,47 @@ write.csv(basidiosWorldOcc_20plus_downsampled, "basidiosWorldOcc_20plus_downsamp
 write.csv(basidiosWorldOcc_20plus, "basidiosWorldOcc_20plus.csv", quote = FALSE, row.names = FALSE)
 
 ###initialize dataframe to store results
-HLES_total = data.frame(percentSurvive = c(NA), cellSize = c(NA), habitatRemaining = c(NA), taxon = c(NA))
+HLES_total = data.frame(percentSurvive = c(NA), cellSize = c(NA), habitatRemaining = c(NA), taxon = c(NA), thatSeed = c(NA), uniqueThing = c(NA))
 write.table(na.omit(HLES_total), "HLES_total.csv", row.names = FALSE, col.names = TRUE, sep = ",", quote = FALSE)
 
 ### read in occurrence data
-basidiosWorld = read_csv("basidiosWorldOcc_20plus_downsampled.csv")
+#occ_20plus = read_csv("occ_20plus_downsampled.csv")
 
 ### resolution notes see table on https://github.com/r-barnes/dggridR/
 cellSize = c(1:14)
 habitatLeft = 1/c(2:10)
+umbrellaList = unique(occ_20plus$umbrellaTaxon)
+umbrellaLength = length(unique(occ_20plus$umbrellaTaxon))
 ### needs to be 1/integer...this is the proportion of habitat retained, not habitat lost (starts at 1/2 because 1/1 would be all habitat retained)
-taxon = "basidios" ### change this depending on dataset
+
+
 
 for (j in 1:14){
 	for (k in 1:9){
 		dggs = dgconstruct(res = cellSize[j])
-		basidiosWorld$cell <- dgGEO_to_SEQNUM(dggs, basidiosWorld$long, basidiosWorld$lat)$seqnum
-		randomSorter = rep(1:(1/habitatLeft[k]), length(unique(basidiosWorld$cell)))[1:length(unique(basidiosWorld$cell))]
-		percentExtant = c()
-			for (i in 1:20){
-				basidiosSquareScrambler = data.frame(cell = unique(basidiosWorld$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
-				basidiosWorldCellScramble = left_join(basidiosWorld, basidiosSquareScrambler, by = "cell")
-				subsetbasidios = subset(basidiosWorldCellScramble, basidiosWorldCellScramble$randomSorter==1)
-				percentExtant = c(percentExtant, length(unique(subsetbasidios$acceptedTaxonKey))/length(unique(basidiosWorldCellScramble$acceptedTaxonKey)))
+		occ_20plus$cell <- dgGEO_to_SEQNUM(dggs, occ_20plus$long, occ_20plus$lat)$seqnum
+		randomSorter = rep(1:(1/habitatLeft[k]), length(unique(occ_20plus$cell)))[1:length(unique(occ_20plus$cell))]
+			for (i in 1:10){
+				thisSeed = sample(100000:999999, 1)
+				notThisSeed = sample(0:thisSeed, 1)
+				set.seed = thisSeed
+				occ_20plusScrambler = data.frame(cell = unique(occ_20plus$cell), randomSorter = sample(randomSorter, length(randomSorter), replace = FALSE))
+				occ_20plusCellScramble = left_join(occ_20plus, occ_20plusScrambler, by = "cell")
+				subsetOcc_20plus = subset(occ_20plusCellScramble, occ_20plusCellScramble$randomSorter==1)
+					for (h in 1:umbrellaLength){
+						taxonSubsetOcc_20plus = subset(subsetOcc_20plus, subsetOcc_20plus$umbrellaTaxon == umbrellaList[h])
+						taxonOcc_20plus = subset(occ_20plus, occ_20plus$umbrellaTaxon == umbrellaList[h])
+						percentExtant = length(unique(taxonSubsetOcc_20plus$acceptedTaxonKey))/length(unique(taxonOcc_20plus$acceptedTaxonKey))
+					
+					HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize[j], habitatRemaining = habitatLeft[k], taxon = umbrellaList[h], thatSeed = thisSeed, uniqueThing = paste(thisSeed, notThisSeed, sep = "_"))
+					HLES_total = rbind(HLES_total, HLES)
+					write.table(HLES, "HLES_total.csv", row.names = FALSE, col.names = FALSE, sep = ",", quote = FALSE, append = TRUE)
+						
+					}
+
+					
+
 			}
 		
-		HLES = data.frame(percentSurvive = percentExtant, cellSize = cellSize[j], habitatRemaining = habitatLeft[k], taxon = taxon)
-		HLES_total = rbind(HLES_total, HLES)
-		write.table(HLES, "HLES_total.csv", row.names = FALSE, col.names = FALSE, sep = ",", quote = FALSE, append = TRUE)	
 	}
 }
