@@ -74,3 +74,11 @@ for (j in 1:14){
 		
 	}
 }
+
+
+### read in output from previous mess of for loops: 
+HLES_full = read.table(file = "HLES_total.csv", header = T, sep = ',')
+
+### reshape into wide format so we can compare how survival proportion is correlated among taxa
+
+
