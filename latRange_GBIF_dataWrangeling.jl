@@ -41,7 +41,7 @@ subsubSUBset_basidio = subset(subsubset_basidio, :taxonRank => ByRow(taxonRank -
 CSV.write("subset_GBIF_basidio.csv", DataFrame(subsubSUBset_basidio), bufsize = 4194304000);
 
 ### make dataframe with the lat min, lat max, and count for each species (accepted taxon key)
-GBIF_basidio_summary = combine(groupby(subsubSUBset, :acceptedTaxonKey), :lat => maximum, :lat => minimum, nrow);
+GBIF_basidio_summary = combine(groupby(subsubSUBset_basidio, :acceptedTaxonKey), :lat => maximum, :lat => minimum, nrow);
 
 ### add other columns
 
