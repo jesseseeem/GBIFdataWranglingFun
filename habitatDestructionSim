@@ -4,29 +4,29 @@ library(readr)
 library(groupdata2)
 library(tibble)
 
-### read in the summary statistics (lat range, lat midpoint, etc for each taxon)
-### each row is a taxon (unique "acceptedTaxonKey")
-### nrow column is how many occurrences per taxon
-basidiosWorld = read_csv("GBIF_basidios_world_summaryStats.csv", col_names = TRUE)
 
-### read in the occurrence data 
-### each row is one observation
-basidiosWorldOcc = read_csv("subset_GBIF_basidios_world.csv", col_names = TRUE)
 
-### originally I made a dataset of only taxa with occurrences between 20 and 100 occurrences
-### but I think it maybe makes more sense to just use all taxa with at least 20 occurrences 
-basidiosWorld_20plus = subset(basidiosWorld, nrow > 19)
+summaryStats_20plus = subset(summaryStats, nrow > 19)
 
-basidiosWorldOcc_tib = as_tibble(basidiosWorldOcc)
-basidiosWorld_20plus_tib = as_tibble(basidiosWorld_20plus)
+
+
+occurrence_tib = as_tibble(occurrence)
+
+summaryStats_20plus_tib = as_tibble(summaryStats_20plus)
 
 ### pull out the occurrences from the taxa that occur at least 20 times
-basidiosWorldOcc_20plus = semi_join(basidiosWorldOcc_tib, basidiosWorld_20plus_tib, by = "acceptedTaxonKey")
+occ_20plus = semi_join(occurrence_tib, summaryStats_20plus_tib, by = "acceptedTaxonKey")
 
-basidiosWorldOcc_20plus_downsampled = downsample(basidiosWorldOcc_20plus, cat_col="acceptedTaxonKey")
+occ_20plus_tib = as_tibble(occ_20plus)
 
-write.csv(basidiosWorldOcc_20plus_downsampled, "basidiosWorldOcc_20plus_downsampled.csv", quote = FALSE, row.names = FALSE)
-write.csv(basidiosWorldOcc_20plus, "basidiosWorldOcc_20plus.csv", quote = FALSE, row.names = FALSE)
+### downsample the occurrence data so that each taxon occurs exactly 20 times
+### I think it might be important to standarize occurrence number per taxon, in case e.g., lepidoptera are biased 
+### towards more 100 occurrences, stylommatophora are biased towards more 20 occurrences, etc
+
+occ_20plus_downsampled = downsample(occ_20plus, cat_col="acceptedTaxonKey")
+
+### write it out! 
+write.csv(occ_20plus_downsampled, "occ_20plus_downsampled.csv", quote = FALSE, row.names = FALSE)
 
 ###initialize dataframe to store results
 HLES_total = data.frame(percentSurvive = c(NA), cellSize = c(NA), habitatRemaining = c(NA), taxon = c(NA), thatSeed = c(NA), uniqueThing = c(NA))
