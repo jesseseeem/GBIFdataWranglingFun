@@ -84,3 +84,9 @@ HLES_full = read.table(file = "HLES_total.csv", header = T, sep = ',')
 
 HLES_full_wide = HLES_full %>% pivot_wider(names_from = taxon, values_from = percentSurvive)
 
+### make subsets
+HLES_full_wide_6 = subset(HLES_full_wide, HLES_full_wide$cellSize == 6)
+
+HLES_full_wide_6_tenth = subset(HLES_full_wide_6, HLES_full_wide_6$habitatRemaining == 0.1)
+HLES_full_wide_6_quarter = subset(HLES_full_wide_6, HLES_full_wide_6$habitatRemaining == 0.25)
+
