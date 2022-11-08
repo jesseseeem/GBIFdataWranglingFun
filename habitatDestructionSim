@@ -4,7 +4,8 @@ library(readr)
 library(groupdata2)
 library(tibble)
 
-
+occurrence = read.table(file = "subset_GBIF_combinedTaxa.csv", header = T, sep = ",")
+summaryStats = read.table(file = "GBIF_combinedTaxon_summary.csv", header = T, sep = ",")
 
 summaryStats_20plus = subset(summaryStats, nrow > 19)
 
