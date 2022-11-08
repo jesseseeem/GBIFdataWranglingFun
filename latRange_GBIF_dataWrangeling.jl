@@ -53,3 +53,12 @@ insertcols!(GBIF_basidio_summary, 7,  :lat_mid => (GBIF_basidio_summary.lat_maxi
 
 ### write out summary stats file
 CSV.write("GBIF_basidio_summary.csv", DataFrame(GBIF_basidio_summary), bufsize = 4194304000);
+
+
+### ultimately, it's probably most useful to have both the summary stats file and the occurrence file 
+### all together, with a separate column indicating what taxon everything is:
+### key is "append = true"
+
+CSV.write("subset_GBIF_combinedTaxa.csv", DataFrame(subsubSUBset_basidio), append = true, bufsize = 4194304000);
+
+CSV.write("GBIF_combinedTaxon_summary.csv", DataFrame(GBIF_basidio_summary), append = true, bufsize = 4194304000);
