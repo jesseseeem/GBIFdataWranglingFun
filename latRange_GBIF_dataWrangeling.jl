@@ -49,7 +49,7 @@ insertcols!(GBIF_basidio_summary, 5,  :taxon => repeat(["basidio"], size(GBIF_ba
 
 insertcols!(GBIF_basidio_summary, 6,  :lat_range => GBIF_basidio_summary.lat_maximum - GBIF_basidio_summary.lat_minimum);
 
-insertcols!(GBIF_basidio_summary, 7,  :lat_mid => (GBIF_basidio_summary.lat_maximum + GBIF_basidio_aus_summary.lat_minimum)/2);
+insertcols!(GBIF_basidio_summary, 7,  :lat_mid => (GBIF_basidio_summary.lat_maximum + GBIF_basidio_summary.lat_minimum)/2);
 
 ### write out summary stats file
 CSV.write("GBIF_basidio_summary.csv", DataFrame(GBIF_basidio_summary), bufsize = 4194304000);
