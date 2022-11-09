@@ -40,6 +40,14 @@ subsubSUBset_basidio = subset(subsubset_basidio, :taxonRank => ByRow(taxonRank -
 ### write it out! 
 CSV.write("subset_GBIF_basidio.csv", DataFrame(subsubSUBset_basidio), bufsize = 4194304000);
 
+
+### sometimes when the initial DataFrame is made, columns get misclassified (e.g., "String" instead of "Float64", etc
+### presumably because some messy data ending up in the wrong columns
+
+### so at this point it can be helpful to just read in the DataFrame we just wrote out
+### that way, usually the lat/long columns will be correctly Float64 for the calculations below
+subsubSUBset_basidio = CSV.read("subset_GBIF_basidio.csv", DataFrame; delim = ",", header = true);
+
 ### make dataframe with the lat min, lat max, and count for each species (accepted taxon key)
 GBIF_basidio_summary = combine(groupby(subsubSUBset_basidio, :acceptedTaxonKey), :lat => maximum, :lat => minimum, nrow);
 
