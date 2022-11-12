@@ -4,6 +4,12 @@
 ### then replace tab-delimiters with commas to make it a CSV file
 ### cat basidios_world_occurrenceNoCommas.txt | tr "\\t" "," > basidios_world_occurrence.csv
 
+### actually, I think the problem with these large files ends up being " and ' characters, that DataFrames wants to read as new columns
+### so it might be useful to remove all " and ' from files before trying to read into Julia
+### e.g.
+### 
+
+
 
 using DataFrames, CSV, Tables, Random
 ### change file names to match which taxa you're actually filtering... 
