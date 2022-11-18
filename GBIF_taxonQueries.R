@@ -16,3 +16,4 @@ plantGoodTheseData = distinct(plantTheseData)
 
 plantGoodFamilyList = plantFamilies %>% left_join(plantGoodTheseData, by = "family")
 
+write.table(plantGoodTheseData, "plantGoodTheseData.csv", sep = ",")
