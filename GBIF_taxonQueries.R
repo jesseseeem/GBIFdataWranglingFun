@@ -17,3 +17,10 @@ plantGoodTheseData = distinct(plantTheseData)
 plantGoodFamilyList = plantFamilies %>% left_join(plantGoodTheseData, by = "family")
 
 write.table(plantGoodTheseData, "plantGoodTheseData.csv", sep = ",")
+
+
+### example of generating a list of 20 families, and then picking all the species occurrences from the first family
+thisFamilyKeyList = sample(familyKeyList, 20, replace = FALSE)
+oneFamilySubset = subset(plantMoreData, plantMoreData$familyKey ==thisFamilyKeyList[1])
+oneFamilySpeciesKeyList = oneFamilySubset$speciesKey
+
