@@ -6,9 +6,9 @@
 
 ### actually, I think the problem with these large files ends up being " and ' characters, that DataFrames wants to read as new columns
 ### so it might be useful to remove all " and ' from files before trying to read into Julia
-### e.g.
-### sed 's/\"//g' basidios_world_occurrence.csv > basidios_world_occurrence_1.csv ### just removes "
-### sed 's/\'//g' basidios_world_occurrence_1.csv > basidios_world_occurrence_noQuotes.csv ### removes ' from basidios_world_occurrence_1.csv
+### e.g. (note in expressions below, you have to use whichever quote you're not trying to get rid of—e.g., 's/\"//g' vs "s/\'//g"
+### sed 's/\"//g' basidios_world_occurrence.csv > basidios_world_occurrence_1.csv ### just removes double quotes
+### sed "s/\'//g" basidios_world_occurrence_1.csv > basidios_world_occurrence_noQuotes.csv ### removes single quotes from basidios_world_occurrence_1.csv
 
 
 
