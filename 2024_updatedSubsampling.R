@@ -55,7 +55,7 @@ write.table(beetleFamilies5DF_100taxaPlus, "14.iii.2024_beetleFamilies5DF_100tax
 
 
 beetlesAllPlusSummary_20plus_ds_100taxaPlus = beetlesAllPlusSummary_20plus_ds %>% inner_join(beetleFamilies20DF_100taxaPlus)
-write.table(beetleFamilies5DF_100taxaPlus, "14.iii.2024_beetlesAllPlusSummary_20plus_ds_100taxaPlus.txt", quote = FALSE, row.names = FALSE, sep = "\t")
+write.table(beetlesAllPlusSummary_20plus_ds_100taxaPlus, "14.iii.2024_beetlesAllPlusSummary_20plus_ds_100taxaPlus.txt", quote = FALSE, row.names = FALSE, sep = "\t")
 
 
 
