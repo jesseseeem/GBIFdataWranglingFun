@@ -103,5 +103,14 @@ write.table(by_family_occ_20plus, "15.iii.2024_by_family_occ_20plus_latRange.txt
 write.table(by_umbrella_occ_20plus, "15.iii.2024_by_umbrella_occ_20plus_latRange.txt", quote = FALSE, row.names = FALSE, sep = "\t")
 
 
+### read back in data from spatial subsamples so we can get summary data
+
+HLES_final = read.table(file = "16.iii.2024_HLES_practice.txt", header = T, sep = "\t")
+
+
+library(tidyr)
+
+HLES_final_longer = HLES_final %>% pivot_longer(cols = familyList[1]:familyList[familyLength], names_to = "family", values_to = "percentSppSurvive")
+
 
 
