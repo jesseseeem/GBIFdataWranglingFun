@@ -110,7 +110,36 @@ HLES_final = read.table(file = "16.iii.2024_HLES_practice.txt", header = T, sep 
 
 library(tidyr)
 
-HLES_final_longer = HLES_final %>% pivot_longer(cols = familyList[1]:familyList[familyLength], names_to = "family", values_to = "percentSppSurvive")
+HLES_final_longer_family = HLES_final %>% pivot_longer(cols = familyList[1]:familyList[familyLength], names_to = "family", values_to = "percentSppSurvive")
+
+### more code for subsetting, summarizing, etc
+
+HLES_final_longer_family =  HLES_final_longer_family %>% left_join(by_family_occ_20plus)
+
+HLES_final_longer_family_res6 = subset(HLES_final_longer_family, HLES_final_longer_family$cellSize == 6)
+
+HLES_final_longer_family_res6_quarterEarth = subset(HLES_final_longer_family_res6, HLES_final_longer_family_res6$habitatLeft == 0.25)
+
+
+plot(HLES_final_longer_family_res6_quarterEarth $percentSppSurvive ~ log2(HLES_final_longer_family_res6_quarterEarth $lat_range))
+abline(lm(HLES_final_longer_family_res6_quarterEarth $percentSppSurvive ~ log2(HLES_final_longer_family_res6_quarterEarth $lat_range))) 
+
+
+HLES_final_longer_family_res6_quarterEarth_familyMedian  = HLES_final_longer_family_res6_quarterEarth %>% 
+  group_by(family) %>%  
+  summarise(across((percentSppSurvive), median)) 
+
+HLES_final_longer_family_res6_quarterEarth_familyMedian = HLES_final_longer_family_res6_quarterEarth_familyMedian %>% left_join(by_family_occ_20plus)
+
+
+plot(HLES_final_longer_family_res6_quarterEarth_familyMedian $percentSppSurvive ~ log2(HLES_final_longer_family_res6_quarterEarth_familyMedian $lat_range)) ; abline(lm(HLES_final_longer_family_res6_quarterEarth_familyMedian $percentSppSurvive ~ log2(HLES_final_longer_family_res6_quarterEarth_familyMedian $lat_range)))
+
+
+summary(lm(HLES_final_longer_family_res6_quarterEarth_familyMedian $percentSppSurvive ~ log2(HLES_final_longer_family_res6_quarterEarth_familyMedian $lat_range)))
+
+
+write.table(HLES_final_longer_family_res6_quarterEarth_familyMedian, "16.iii.2024_HLES_final_longer_family_res6_quarterEarth_familyMedian.txt", quote = FALSE, row.names = FALSE, sep = "\t")
+
 
 
 
