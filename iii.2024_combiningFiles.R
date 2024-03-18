@@ -82,7 +82,7 @@ gastropod_20plus = read.table(file = "17.iii.2024_gastropodsAllPlusSummary_20plu
 everythingCombined_20plus = rbind(arthropodCombined_20plus, plantsCombined_20plus, invertsCombined_20plus, otherEuks_20plus, chordates_20plus, gastropod_20plus)
 
 
-write.table(otherEuks_20plus, "17.iii.2024_everythingCombinedAllPlusSummary_20plus_ds_100taxaPlus.txt", quote = FALSE, row.names = FALSE, sep = "\t")
+write.table(everythingCombined_20plus, "17.iii.2024_everythingCombinedAllPlusSummary_20plus_ds_100taxaPlus.txt", quote = FALSE, row.names = FALSE, sep = "\t")
 
 
 
