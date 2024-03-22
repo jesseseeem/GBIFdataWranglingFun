@@ -65,6 +65,7 @@ CSV.write("GBIF_magnoliopsid_summary.csv", DataFrame(GBIF_magnoliopsid_summary),
 ### check out https://discourse.julialang.org/t/upsampling-and-downsampling-in-julia-for-unbalanced-classes/16856
 ### also https://juliadata.org/DataTables.jl/stable/man/getting_started.html 
 ### might see if DataFrames vs. DataTables can do different dplyr/tidyr type things... 
+### also check out: https://github.com/queryverse/Query.jl 
 
 
 
