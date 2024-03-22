@@ -67,7 +67,7 @@ CSV.write("GBIF_magnoliopsid_summary.csv", DataFrame(GBIF_magnoliopsid_summary),
 ### might see if DataFrames vs. DataTables can do different dplyr/tidyr type things... 
 ### also check out: https://github.com/queryverse/Query.jl 
 ### this one might be the right package for downsampling/undersampling: https://juliaml.github.io/MLUtils.jl/stable/api/#MLUtils.undersample 
-
+### and, honestly, just check DataFrames documentation again... can do lots of stuff just with DataFrames: https://dataframes.juliadata.org/stable/man/comparisons/ 
 
 
 
